@@ -1,5 +1,5 @@
 <?php
 date_default_timezone_set('GMT');
-header("Last-Modified: " . date("Y-m-d H:i:s \G\M\T"));
+header("Last-Modified: " . gmdate('D, d M Y H:i:s T'));
 header("Connection: keep-alive");
 ?>
