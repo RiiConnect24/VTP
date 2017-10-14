@@ -1,6 +1,6 @@
 <?php
-header("Content-Type: 0");
-header("Pragma: no-cache");
-header("Proxy-Authorization: Basic");
-header("Authorization: Basic");
+header("Content-Length: 2");
+header("Content-Type: text/html; charset=UTF-8");
+header("Connection: keep-alive");
+echo("OK");
 ?>
