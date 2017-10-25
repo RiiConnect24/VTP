@@ -23,4 +23,7 @@ $stmt = $db->prepare('INSERT INTO `suggestions` (`wiiNo`,
 ) VALUES (?, ?, ?, ?, ?, ?, ?)');
 
 $stmt->bind_param('iiiisss', $wiiNo, $countryID, $regionID, $langCD, $content, $choice1, $choice2);
+
+if (!$stmt->execute())
+	error_log('DATABASE ERROR ON suggest - ' . $stmt->error);
 ?>
