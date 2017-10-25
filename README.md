@@ -5,4 +5,4 @@ The VTP server stores Everybody Votes Channel votes/question suggestions that th
 - `time.cgi` returns a Last-Modified header with the latest time.
 - `vote.cgi` is the script that stores votes.
 
-Unfortunately, if you set up the Everybody Votes Channel and try to vote or suggest a question, you get an error like 231000 or 000000. We're trying things to get the errors to go away, and as of right now the scripts are not connected to SSL.
+As of right now the scripts are not connected to SSL.
