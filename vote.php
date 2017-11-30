@@ -1,5 +1,6 @@
 <?php
-include "config/config.php";
+require "config/config.php";
+require "lib/snowflake.php";
 
 $typeCD = $_GET['typeCD'];
 $questionID = $_GET['questionID'];
@@ -10,17 +11,19 @@ $ansCNT = $_GET['ansCNT'];
 
 $db = connectMySQL();
 
-$stmt = $db->prepare('INSERT INTO `votes` (`typeCD`,
+$stmt = $db->prepare('INSERT INTO `votes` (`uuid`,
+  `typeCD`,
   `questionID`,
   `wiiNo`,
   `countryID`,
   `regionID`,
   `ansCNT`
-) VALUES (?, ?, ?, ?, ?, ?)');
+) VALUES (?, ?, ?, ?, ?, ?, ?)');
 
-$stmt->bind_param('iiiiis', $typeCD, $questionID, $wiiNo, $countryID, $regionID, $ansCNT);
+$stmt->bind_param('iiiiiis', utc2snowflake(time()), $typeCD, $questionID, $wiiNo, $countryID, $regionID, $ansCNT);
 
 if (!$stmt->execute())
 	error_log('DATABASE ERROR ON vote - ' . $stmt->error);
+
 echo("100");
 ?>

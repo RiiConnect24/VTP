@@ -1,5 +1,6 @@
 <?php
-include "config/config.php";
+require "config/config.php";
+require "lib/snowflake.php";
 
 $wiiNo = $_POST['wiiNo'];
 $countryID = $_POST['countryID'];
@@ -11,16 +12,17 @@ $choice2 = $_POST['choice2'];
 
 $db = connectMySQL();
 
-$stmt = $db->prepare('INSERT INTO `suggestions` (`wiiNo`,
+$stmt = $db->prepare('INSERT INTO `suggestions` (`uuid`,
+  `wiiNo`,
   `countryID`,
   `regionID`,
   `langCD`,
   `content`,
   `choice1`,
   `choice2`
-) VALUES (?, ?, ?, ?, ?, ?, ?)');
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
 
-$stmt->bind_param('iiiisss', $wiiNo, $countryID, $regionID, $langCD, $content, $choice1, $choice2);
+$stmt->bind_param('iisiiisss', utc2snowflake(time()), $wiiNo, $countryID, $regionID, $langCD, $content, $choice1, $choice2);
 
 if (!$stmt->execute())
 	error_log('DATABASE ERROR ON suggest - ' . $stmt->error);
