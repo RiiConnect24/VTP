@@ -1,8 +1,6 @@
 <?php
 include "config/config.php";
 
-echo("100");
-
 $wiiNo = $_POST['wiiNo'];
 $countryID = $_POST['countryID'];
 $regionID = $_POST['regionID'];
@@ -26,4 +24,6 @@ $stmt->bind_param('iiiisss', $wiiNo, $countryID, $regionID, $langCD, $content, $
 
 if (!$stmt->execute())
 	error_log('DATABASE ERROR ON suggest - ' . $stmt->error);
+
+echo("100");
 ?>

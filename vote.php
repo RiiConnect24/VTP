@@ -1,8 +1,6 @@
 <?php
 include "config/config.php";
 
-echo("100");
-
 $typeCD = $_GET['typeCD'];
 $questionID = $_GET['questionID'];
 $wiiNo = $_GET['wiiNo'];
@@ -24,4 +22,5 @@ $stmt->bind_param('iiiiis', $typeCD, $questionID, $wiiNo, $countryID, $regionID,
 
 if (!$stmt->execute())
 	error_log('DATABASE ERROR ON vote - ' . $stmt->error);
+echo("100");
 ?>
