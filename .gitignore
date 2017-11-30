@@ -1,17 +1,17 @@
--# Created by .ignore support plugin (hsz.mobi)
- -### Example user template template
- -### Example user template
- -
- -# IntelliJ project files
- -.idea
- -*.iml
- -out
- -gen### Processing template
- -.DS_Store
- -applet
- -application.linux32
- -application.linux64
- -application.windows32
- -application.windows64
- -application.macosx
+# Created by .ignore support plugin (hsz.mobi)
+### Example user template template
+### Example user template
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+### Processing template
+.DS_Store
+applet
+application.linux32
+application.linux64
+application.windows32
+application.windows64
+application.macosx
 
