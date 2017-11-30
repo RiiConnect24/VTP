@@ -8,6 +8,7 @@ $wiiNo = $_GET['wiiNo'];
 $countryID = $_GET['countryID'];
 $regionID = $_GET['regionID'];
 $ansCNT = $_GET['ansCNT'];
+$uuid = utc2snowflake(time());
 
 $db = connectMySQL();
 
@@ -20,7 +21,7 @@ $stmt = $db->prepare('INSERT INTO `votes` (`uuid`,
   `ansCNT`
 ) VALUES (?, ?, ?, ?, ?, ?, ?)');
 
-$stmt->bind_param('iiiiiis', utc2snowflake(time()), $typeCD, $questionID, $wiiNo, $countryID, $regionID, $ansCNT);
+$stmt->bind_param('iiiiiis', $uuid, $typeCD, $questionID, $wiiNo, $countryID, $regionID, $ansCNT);
 
 if (!$stmt->execute())
 	error_log('DATABASE ERROR ON vote - ' . $stmt->error);

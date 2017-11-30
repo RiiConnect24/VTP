@@ -9,6 +9,7 @@ $langCD = $_POST['langCD'];
 $content = $_POST['content'];
 $choice1 = $_POST['choice1'];
 $choice2 = $_POST['choice2'];
+$uuid = utc2snowflake(time());
 
 $db = connectMySQL();
 
@@ -22,10 +23,11 @@ $stmt = $db->prepare('INSERT INTO `suggestions` (`uuid`,
   `choice2`
 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
 
-$stmt->bind_param('iisiiisss', utc2snowflake(time()), $wiiNo, $countryID, $regionID, $langCD, $content, $choice1, $choice2);
+$stmt->bind_param('iisiiisss', $uuid, $wiiNo, $countryID, $regionID, $langCD, $content, $choice1, $choice2);
 
 if (!$stmt->execute())
 	error_log('DATABASE ERROR ON suggest - ' . $stmt->error);
+	die();
 
 echo("100");
 ?>
