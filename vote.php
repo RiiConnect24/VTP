@@ -8,7 +8,9 @@ $wiiNo = $_GET['wiiNo'];
 $countryID = $_GET['countryID'];
 $regionID = $_GET['regionID'];
 $ansCNT = $_GET['ansCNT'];
-$uuid = utc2snowflake(time());
+
+$sf = new SnowFlake(1,1);
+$uuid = $sf->generateID();
 
 $db = connectMySQL();
 

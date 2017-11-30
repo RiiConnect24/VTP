@@ -9,7 +9,9 @@ $langCD = $_POST['langCD'];
 $content = $_POST['content'];
 $choice1 = $_POST['choice1'];
 $choice2 = $_POST['choice2'];
-$uuid = utc2snowflake(time());
+
+$sf = new SnowFlake(1,1);
+$uuid = $sf->generateID();
 
 $db = connectMySQL();
 
