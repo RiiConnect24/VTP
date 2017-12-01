@@ -1,8 +1,4 @@
 <?php
-if (stripos( $_SERVER["HTTP_USER_AGENT"], 'WiiConnect24') === false) {
-    die(500); // Goodbye skiddie
-}
-
 require "config/config.php";
 require "lib/snowflake.php";
 require_once 'vendor/autoload.php';
