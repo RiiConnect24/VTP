@@ -1,12 +1,9 @@
-# Created by .ignore support plugin (hsz.mobi)
-### Example user template template
-### Example user template
 # IntelliJ project files
 .idea
 *.iml
 out
 gen
-### Processing template
+# Processing files
 .DS_Store
 applet
 application.linux32
@@ -15,3 +12,9 @@ application.windows32
 application.windows64
 application.macosx
 
+# Composer
+composer.lock
+vendor
+
+# Project specific files
+config/config.php

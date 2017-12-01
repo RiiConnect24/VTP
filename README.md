@@ -6,3 +6,7 @@ The VTP server stores Everybody Votes Channel votes/question suggestions that th
 - `vote.cgi` is the script that stores votes.
 
 As of right now the scripts are not connected to SSL.
+
+# Config
+- Line 10 - MySQL Database, Username, and Password.
+- `$sentryurl` - this is the Sentry URL for error logging.

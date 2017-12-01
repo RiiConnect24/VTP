@@ -11,4 +11,6 @@ function connectMySQL()
     }
     return $db;
 }
+
+$sentryurl = "SETME";
 ?>
