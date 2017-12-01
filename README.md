@@ -1,12 +1,12 @@
 # VTP
 The VTP server stores Everybody Votes Channel votes/question suggestions that the Wii sends to it. It also has a time server the Wii uses to sync the time with.
 
-- `suggest.cgi` is the script that stores question suggestions.
-- `time.cgi` returns a Last-Modified header with the latest time. It will need to have an alias to to index.html, because that's what the Wii loads for the time.
-- `vote.cgi` is the script that stores votes.
+# Setup
+1. Import schema.sql to a database on your MySQL server.
+2. Run `composer update` to ensure Sentry is installed.
+3. Edit the config to give the Sentry URL, MySQL Username/Pass/DB.
+4. Publish the scripts to the appropiate folders.
 
-As of right now the scripts are not connected to SSL.
+If you do not require Sentry, comment out lines 4 and 5 in `vote.php` and `suggest.php`
 
-# Config
-- Line 10 - MySQL Database, Username, and Password.
-- `$sentryurl` - this is the Sentry URL for error logging.
+RiiConnect24 will not provide support for these scripts or setup, unless the issue is our own fault/bug
