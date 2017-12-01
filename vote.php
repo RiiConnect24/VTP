@@ -27,8 +27,10 @@ $stmt = $db->prepare('INSERT INTO `votes` (`uuid`,
 
 $stmt->bind_param('iiiiiiis', $uuid, $typeCD, $questionID, $wiiNo, $countryID, $regionID, $ansCNT);
 
-if (!$stmt->execute())
-	error_log('DATABASE ERROR ON vote - ' . $stmt->error);
+if (!$stmt->execute()) {
+    error_log('DATABASE ERROR ON vote - ' . $stmt->error);
+	die(500);
+}
 
-echo("100");
+echo(100);
 ?>

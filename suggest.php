@@ -29,9 +29,10 @@ $stmt = $db->prepare('INSERT INTO `suggestions` (`uuid`,
 
 $stmt->bind_param('iiiiisss', $uuid, $wiiNo, $countryID, $regionID, $langCD, $content, $choice1, $choice2);
 
-if (!$stmt->execute())
+if (!$stmt->execute()) {
 	error_log('DATABASE ERROR ON suggest - ' . $stmt->error);
-	die();
+	die(500);
+}
 
-echo("100");
+echo(100);
 ?>
