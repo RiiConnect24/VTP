@@ -1,6 +1,8 @@
 <?php
 require "config/config.php";
 require "lib/snowflake.php";
+require_once 'vendor/autoload.php';
+$client = (new Raven_Client($sentryurl))->install();
 
 $wiiNo = $_POST['wiiNo'];
 $countryID = $_POST['countryID'];
