@@ -16,7 +16,7 @@ $choice1 = $_POST['choice1'];
 $choice2 = $_POST['choice2'];
 
 $sf = new SnowFlake(1,1);
-$uuid = $sf->generateID();
+$uuid = abs($sf->generateID());
 
 $db = connectMySQL();
 

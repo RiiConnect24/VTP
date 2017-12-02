@@ -1,6 +1,6 @@
 <?php
 if (empty($_GET)) {
-    die("Stop hitting our server without actual vote data. Thanks!");
+    die("Stop hitting our server without actual vote4 data. Thanks!");
 }
 require "config/config.php";
 require "lib/snowflake.php";
@@ -15,7 +15,7 @@ $regionID = $_GET['regionID'];
 $ansCNT = $_GET['ansCNT'];
 
 $sf = new SnowFlake(1,1);
-$uuid = $sf->generateID();
+$uuid = abs($sf->generateID());
 
 $db = connectMySQL();
 
