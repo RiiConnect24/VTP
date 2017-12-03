@@ -1,6 +1,8 @@
+CREATE DATABASE  IF NOT EXISTS `EVC` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `EVC`;
 -- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
 --
--- Host: 127.0.0.1    Database: EVC
+-- Host: localhost    Database: EVC
 -- ------------------------------------------------------
 -- Server version	5.7.20
 
@@ -88,15 +90,15 @@ DROP TABLE IF EXISTS `votes`;
 CREATE TABLE `votes` (
   `uuid` bigint(64) NOT NULL,
   `typeCD` tinyint(1) unsigned NOT NULL,
-  `questionID` int(5) unsigned NOT NULL,
+  `questionID` int(5) unsigned zerofill NOT NULL,
   `wiiNo` bigint(16) unsigned zerofill NOT NULL,
-  `countryID` tinyint(3) unsigned NOT NULL,
-  `regionID` tinyint(2) unsigned NOT NULL,
-  `ansCNT` char(4) NOT NULL,
+  `countryID` tinyint(3) unsigned zerofill NOT NULL,
+  `regionID` tinyint(2) unsigned zerofill NOT NULL,
+  `ansCNT` int(4) unsigned zerofill NOT NULL,
   UNIQUE KEY `votes_uuid_uindex` (`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
@@ -106,4 +108,4 @@ CREATE TABLE `votes` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-01 14:21:26
+-- Dump completed on 2017-12-03 11:19:17
