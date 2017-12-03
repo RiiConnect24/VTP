@@ -1,5 +1,5 @@
 <?php
-if(isset($_SERVER['HTTP_USER_AGENT']){ // if not the Wii
+if(isset($_SERVER['HTTP_USER_AGENT'])){ // if not the Wii
     die("Hi! You're not a Wii.");
 }
 if (empty($_POST)) {
