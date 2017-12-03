@@ -1,6 +1,6 @@
 <?php
 if (empty($_GET)) {
-    die("Stop hitting our server without actual vote4 data. Thanks!");
+    die("Stop hitting our server without actual vote data. Thanks!");
 }
 require "config/config.php";
 require "lib/snowflake.php";
