@@ -23,7 +23,8 @@ $uuid = abs($sf->generateID());
 
 $db = connectMySQL();
 
-$stmt = $db->prepare('INSERT INTO `votes` (`uuid`,
+$stmt = $db->prepare('INSERT INTO `votes` (
+    `uuid`,
     `typeCD`,
     `questionID`,
     `wiiNo`,
