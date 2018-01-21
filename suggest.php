@@ -11,7 +11,7 @@ $content = $_POST['content'];
 $choice1 = $_POST['choice1'];
 $choice2 = $_POST['choice2'];
 
-if (empty($wiiNo) || empty($countryID) || empty($regionID) || empty($langCD) || empty($content) || empty($choice1) || empty($choice2) || strlen($wiiNo) != 16)
+if (!isset($wiiNo) || !isset($countryID) || !isset($regionID) || !isset($langCD) || !isset($content) || !isset($choice1) || !isset($choice2) || strlen($wiiNo) != 16)
     die();
 
 require "config/config.php";
