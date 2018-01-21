@@ -10,7 +10,7 @@ $countryID = $_GET['countryID'];
 $regionID = $_GET['regionID'];
 $ansCNT = $_GET['ansCNT'];
 
-if (empty($typeCD) || empty($questionID) || empty($wiiNo) || empty($countryID) || empty($regionID) || empty($ansCNT) || strlen($wiiNo) != 16)
+if (empty($questionID) || empty($wiiNo) || empty($countryID) || empty($regionID) || empty($ansCNT) || strlen($wiiNo) != 16)
     die();
 
 require "config/config.php";
