@@ -1,13 +1,15 @@
 <?php
-if(isset($_SERVER['HTTP_USER_AGENT'])){ // if not the Wii
+
+if (isset($_SERVER['HTTP_USER_AGENT'])) // if not the Wii
     die("Hi! You're not a Wii.");
-}
-if (empty($_POST)) {
+
+if (empty($_POST))
     die("Stop hitting our server without actual suggestion data. Thanks!");
-}
+
 require "config/config.php";
 require "lib/snowflake.php";
 require_once 'vendor/autoload.php';
+
 $client = (new Raven_Client($sentryurl))->install();
 
 $wiiNo = $_POST['wiiNo'];
@@ -24,21 +26,20 @@ $uuid = abs($sf->generateID());
 $db = connectMySQL();
 
 $stmt = $db->prepare('INSERT INTO `suggestions` (`uuid`,
-  `wiiNo`,
-  `countryID`,
-  `regionID`,
-  `langCD`,
-  `content`,
-  `choice1`,
-  `choice2`
+    `wiiNo`,
+    `countryID`,
+    `regionID`,
+    `langCD`,
+    `content`,
+    `choice1`,
+    `choice2`
 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
 
 $stmt->bind_param('iiiiisss', $uuid, $wiiNo, $countryID, $regionID, $langCD, $content, $choice1, $choice2);
 
 if (!$stmt->execute()) {
-	error_log('DATABASE ERROR ON suggest - ' . $stmt->error);
-	die(500);
+    error_log('DATABASE ERROR ON suggest - ' . $stmt->error);
+    die(500);
 }
 
 echo(100);
-?>
