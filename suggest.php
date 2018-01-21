@@ -1,16 +1,7 @@
 <?php
 
-if (isset($_SERVER['HTTP_USER_AGENT'])) // if not the Wii
-    die("Hi! You're not a Wii.");
-
-if (empty($_POST))
-    die("Stop hitting our server without actual suggestion data. Thanks!");
-
-require "config/config.php";
-require "lib/snowflake.php";
-require_once 'vendor/autoload.php';
-
-$client = (new Raven_Client($sentryurl))->install();
+if (isset($_SERVER['HTTP_USER_AGENT']) || empty($_POST))
+    die();
 
 $wiiNo = $_POST['wiiNo'];
 $countryID = $_POST['countryID'];
@@ -20,12 +11,21 @@ $content = $_POST['content'];
 $choice1 = $_POST['choice1'];
 $choice2 = $_POST['choice2'];
 
+if (empty($wiiNo) || empty($countryID) || empty($regionID) || empty($langCD) || empty($content) || empty($choice1) || empty($choice2) || strlen($wiiNo) != 16)
+    die();
+
+require "config/config.php";
+require "lib/snowflake.php";
+require_once 'vendor/autoload.php';
+
+$client = (new Raven_Client($sentryurl))->install();
 $sf = new SnowFlake(1,1);
 $uuid = abs($sf->generateID());
 
 $db = connectMySQL();
 
-$stmt = $db->prepare('INSERT INTO `suggestions` (`uuid`,
+$stmt = $db->prepare('INSERT INTO `suggestions` (
+    `uuid`,
     `wiiNo`,
     `countryID`,
     `regionID`,
