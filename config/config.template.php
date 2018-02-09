@@ -3,15 +3,15 @@
  * Example configuration. Modify these parameters.
  */
 
-global $db;
-
 function connectMySQL() {
-    global $db;
+    $conn = new mysqli('127.0.0.1', 'USERNAME', 'PASS', 'DATABASE');
 
-    if (!$db)
-        $db = new mysqli('127.0.0.1', 'USERNAME', 'PASS', 'DATABASE');
-    
-    return $db;
+    if ($conn->connect_error) {
+        error_log("MySQL connection error: " . $conn->connect_error);
+        die();
+    }
+
+    return $conn;
 }
 
 $sentryurl = "SETME";
