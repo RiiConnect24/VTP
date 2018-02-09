@@ -51,7 +51,7 @@ if ($stmt = $conn->prepare('INSERT INTO `votes` (
     `countryID`,
     `regionID`,
     `ansCNT`
-) VALUES (?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE `ansCNT`=VALUES(`ansCNT`)')) {
+) VALUES (?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE `ansCNT` = `ansCNT` + VALUES(`ansCNT`)')) {
     $stmt->bind_param('iiiiiii', $uuid, $typeCD, $questionID, $wiiNo, $countryID, $regionID, $ansCNT);
     if ($stmt->execute())
         echo(100);
