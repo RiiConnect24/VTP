@@ -51,6 +51,8 @@ require_once "vendor/autoload.php";
 // Setup sentry.io error logging
 (new Raven_Client($sentryurl))->install();
 
+$uuid = abs((new SnowFlake(1, 1))->generateID());
+
 $conn = connectMySQL();
 
 if ($stmt = $conn->prepare('INSERT INTO `votes` (
@@ -62,7 +64,7 @@ if ($stmt = $conn->prepare('INSERT INTO `votes` (
     `regionID`,
     `ansCNT`
 ) VALUES (?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE `ansCNT` = `ansCNT` + VALUES(`ansCNT`)')) {
-    $stmt->bind_param('iiiiiii', abs((new SnowFlake(1, 1))->generateID()), $typeCD, $questionID, $wiiNo, $countryID, $regionID, $ansCNT);
+    $stmt->bind_param('iiiiiii', $uuid, $typeCD, $questionID, $wiiNo, $countryID, $regionID, $ansCNT);
     if ($stmt->execute())
         echo(100);
     else {

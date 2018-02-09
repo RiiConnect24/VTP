@@ -39,6 +39,8 @@ require_once "vendor/autoload.php";
 // Setup sentry.io error logging
 (new Raven_Client($sentryurl))->install();
 
+$uuid = abs((new SnowFlake(1, 1))->generateID());
+
 $conn = connectMySQL();
 
 if ($stmt = $conn->prepare('INSERT INTO `suggestions` (
@@ -51,7 +53,7 @@ if ($stmt = $conn->prepare('INSERT INTO `suggestions` (
     `choice1`,
     `choice2`
 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')) {
-    $stmt->bind_param('iiiiisss', abs((new SnowFlake(1, 1))->generateID()), $wiiNo, $countryID, $regionID, $langCD, $content, $choice1, $choice2);
+    $stmt->bind_param('iiiiisss', $uuid, $wiiNo, $countryID, $regionID, $langCD, $content, $choice1, $choice2);
     if ($stmt->execute()) {
         echo(100);
     } else {
