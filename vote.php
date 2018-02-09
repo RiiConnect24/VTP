@@ -25,7 +25,8 @@ if (!(
     is_numeric($ansCNT) &&
     strlen($wiiNo) == 16 &&
     strlen($ansCNT) == 4 &&
-    in_array(intval($countryID), [1, 10, 16, 18, 20, 21, 22, 25, 30, 36, 40, 42, 49, 52, 65, 66, 67, 74, 76, 77, 78, 79, 82, 83, 88, 94, 95, 96, 98, 105, 107, 108, 110])
+    in_array(intval($countryID), [1, 10, 16, 18, 20, 21, 22, 25, 30, 36, 40, 42, 49, 52, 65, 66, 67, 74, 76, 77, 78, 79, 82, 83, 88, 94, 95, 96, 98, 105, 107, 108, 110]) &&
+    in_array(intval($typeCD), [0, 1]) // PriceychecksRus
     // TODO Better checks on typeCD, questionID, wiiNo, regionID, ansCNT
 )) {
     error_log("Request failed checks on vote: GET data: " . json_encode($_GET) . " Request: " . json_encode($_SERVER));
@@ -42,7 +43,7 @@ $uuid = abs($sf->generateID());
 
 $conn = connectMySQL();
 
-$stmt = $conn->prepare('INSERT INTO `votes` (
+if ($stmt = $conn->prepare('INSERT INTO `votes` (
     `uuid`,
     `typeCD`,
     `questionID`,
@@ -50,16 +51,18 @@ $stmt = $conn->prepare('INSERT INTO `votes` (
     `countryID`,
     `regionID`,
     `ansCNT`
-) VALUES (?, ?, ?, ?, ?, ?, ?)');
-
-$stmt->bind_param('iiiiiii', $uuid, $typeCD, $questionID, $wiiNo, $countryID, $regionID, $ansCNT);
-
-if ($stmt->execute())
-    echo(100);
-else {
-    error_log("SQL statement error on vote: " . $stmt->error);
+) VALUES (?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE `ansCNT`=VALUES(`ansCNT`)')) {
+    $stmt->bind_param('iiiiiii', $uuid, $typeCD, $questionID, $wiiNo, $countryID, $regionID, $ansCNT);
+    if ($stmt->execute())
+        echo(100);
+    else {
+        error_log("SQL statement error on vote: " . $stmt->error);
+        echo(500);
+    }
+    $stmt->close();
+} else {
+    error_log("SQL statement preparation error: " . $conn->error);
     echo(500);
 }
 
-$stmt->close();
 $conn->close();
