@@ -40,7 +40,7 @@ $uuid = abs($sf->generateID());
 
 $conn = connectMySQL();
 
-$stmt = $conn->prepare('INSERT INTO `suggestions` (
+if ($stmt = $conn->prepare('INSERT INTO `suggestions` (
     `uuid`,
     `wiiNo`,
     `countryID`,
@@ -49,16 +49,18 @@ $stmt = $conn->prepare('INSERT INTO `suggestions` (
     `content`,
     `choice1`,
     `choice2`
-) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-
-$stmt->bind_param('iiiiisss', $uuid, $wiiNo, $countryID, $regionID, $langCD, $content, $choice1, $choice2);
-
-if ($stmt->execute()) {
-    echo(100);
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')) {
+    $stmt->bind_param('iiiiisss', $uuid, $wiiNo, $countryID, $regionID, $langCD, $content, $choice1, $choice2);
+    if ($stmt->execute()) {
+        echo(100);
+    } else {
+        error_log("SQL statement error on vote: " . $stmt->error);
+        echo(500);
+    }
+    $stmt->close();
 } else {
-    error_log("SQL statement error on vote: " . $stmt->error);
+    error_log("SQL statement preparation error: " . $conn->error);
     echo(500);
 }
 
-$stmt->close();
 $conn->close();

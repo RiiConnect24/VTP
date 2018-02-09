@@ -43,7 +43,7 @@ $uuid = abs($sf->generateID());
 
 $conn = connectMySQL();
 
-$stmt = $conn->prepare('INSERT INTO `votes` (
+if ($stmt = $conn->prepare('INSERT INTO `votes` (
     `uuid`,
     `typeCD`,
     `questionID`,
@@ -51,16 +51,18 @@ $stmt = $conn->prepare('INSERT INTO `votes` (
     `countryID`,
     `regionID`,
     `ansCNT`
-) VALUES (?, ?, ?, ?, ?, ?, ?)');
-
-$stmt->bind_param('iiiiiii', $uuid, $typeCD, $questionID, $wiiNo, $countryID, $regionID, $ansCNT);
-
-if ($stmt->execute())
-    echo(100);
-else {
-    error_log("SQL statement error on vote: " . $stmt->error);
+) VALUES (?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE `ansCNT`=VALUES(`ansCNT`)')) {
+    $stmt->bind_param('iiiiiii', $uuid, $typeCD, $questionID, $wiiNo, $countryID, $regionID, $ansCNT);
+    if ($stmt->execute())
+        echo(100);
+    else {
+        error_log("SQL statement error on vote: " . $stmt->error);
+        echo(500);
+    }
+    $stmt->close();
+} else {
+    error_log("SQL statement preparation error: " . $conn->error);
     echo(500);
 }
 
-$stmt->close();
 $conn->close();
