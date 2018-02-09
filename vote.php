@@ -10,6 +10,14 @@ $countryID = $_GET['countryID'];
 $regionID = $_GET['regionID'];
 $ansCNT = $_GET['ansCNT'];
 
+// This still won't check the addition to the duplicate key but will help
+function validAns(string $ans) : bool {
+    $sum = 0;
+    foreach (str_split($ans) as $x)
+        $sum += intval($x);
+    return $sum > 0 && $sum < 7;
+}
+
 if (!(
     isset($typeCD) &&
     isset($questionID) &&
@@ -26,8 +34,9 @@ if (!(
     strlen($wiiNo) == 16 &&
     strlen($ansCNT) == 4 &&
     in_array(intval($countryID), [1, 10, 16, 18, 20, 21, 22, 25, 30, 36, 40, 42, 49, 52, 65, 66, 67, 74, 76, 77, 78, 79, 82, 83, 88, 94, 95, 96, 98, 105, 107, 108, 110]) &&
-    in_array(intval($typeCD), [0, 1]) // PriceychecksRus
-    // TODO Better checks on typeCD, questionID, wiiNo, regionID, ansCNT
+    in_array(intval($typeCD), [0, 1]) && // PriceychecksRus
+    validAns($ansCNT)
+    // TODO Better checks on questionID, wiiNo, regionID
 )) {
     error_log("Request failed checks on vote: GET data: " . json_encode($_GET) . " Request: " . json_encode($_SERVER));
     die(500);
