@@ -42,13 +42,14 @@ if (!(
     die(500);
 }
 
+header("Connection: Keep-alive"); // The Wii hates when it doesn't have its keep alive header
+
 require "config/config.php";
 require "lib/snowflake.php";
 require_once "vendor/autoload.php";
 
-$client = (new Raven_Client($sentryurl))->install();
-$sf = new SnowFlake(1,1);
-$uuid = abs($sf->generateID());
+// Setup sentry.io error logging
+(new Raven_Client($sentryurl))->install();
 
 $conn = connectMySQL();
 
@@ -61,7 +62,7 @@ if ($stmt = $conn->prepare('INSERT INTO `votes` (
     `regionID`,
     `ansCNT`
 ) VALUES (?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE `ansCNT` = `ansCNT` + VALUES(`ansCNT`)')) {
-    $stmt->bind_param('iiiiiii', $uuid, $typeCD, $questionID, $wiiNo, $countryID, $regionID, $ansCNT);
+    $stmt->bind_param('iiiiiii', abs((new SnowFlake(1, 1))->generateID()), $typeCD, $questionID, $wiiNo, $countryID, $regionID, $ansCNT);
     if ($stmt->execute())
         echo(100);
     else {
