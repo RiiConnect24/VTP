@@ -95,7 +95,8 @@ CREATE TABLE `votes` (
   `countryID` tinyint(3) unsigned zerofill NOT NULL,
   `regionID` tinyint(2) unsigned zerofill NOT NULL,
   `ansCNT` int(4) unsigned zerofill NOT NULL,
-  UNIQUE KEY `votes_uuid_uindex` (`uuid`)
+  UNIQUE KEY `votes_uuid_uindex` (`uuid`),
+  UNIQUE INDEX `wii_vote` (`wiiNo`, `questionID`, `typeCD`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
