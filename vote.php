@@ -65,6 +65,7 @@ if ($stmt = $conn->prepare('INSERT INTO `votes` (
     `ansCNT`
 ) VALUES (?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE `ansCNT` = `ansCNT` + VALUES(`ansCNT`)')) {
     $stmt->bind_param('iiiiiii', $uuid, $typeCD, $questionID, $wiiNo, $countryID, $regionID, $ansCNT);
+    DataDogStatsD::increment("votes.total_votes");
     if ($stmt->execute())
         echo(100);
     else {
