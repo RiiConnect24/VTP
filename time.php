@@ -8,4 +8,8 @@ header("Last-Modified: " . gmdate('D, d M Y H:i:s T'));
 
 require_once "vendor/autoload.php";
 
-DataDogStatsD::increment("votes.total_time_syncs");
+use DataDog\DogStatsd;
+
+$statsd = new DogStatsd();
+
+$statsd->increment("votes.total_time_syncs");

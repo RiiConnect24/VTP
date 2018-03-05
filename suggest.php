@@ -41,6 +41,10 @@ $uuid = abs((new SnowFlake(1, 1))->generateID());
 
 $conn = connectMySQL();
 
+use DataDog\DogStatsd;
+
+$statsd = new DogStatsd();
+
 if ($stmt = $conn->prepare('INSERT INTO `suggestions` (
     `uuid`,
     `wiiNo`,
@@ -52,7 +56,7 @@ if ($stmt = $conn->prepare('INSERT INTO `suggestions` (
     `choice2`
 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')) {
     $stmt->bind_param('iiiiisss', $uuid, $wiiNo, $countryID, $regionID, $langCD, $content, $choice1, $choice2);
-    DataDogStatsD::increment("votes.total_suggestions");
+    $statsd->increment("votes.total_suggestions");
     if ($stmt->execute()) {
         echo(100);
     } else {

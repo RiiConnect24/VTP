@@ -53,6 +53,10 @@ $uuid = abs((new SnowFlake(1, 1))->generateID());
 
 $conn = connectMySQL();
 
+use DataDog\DogStatsd;
+
+$statsd = new DogStatsd();
+
 if ($stmt = $conn->prepare('INSERT INTO `votes` (
     `uuid`,
     `typeCD`,
@@ -63,7 +67,7 @@ if ($stmt = $conn->prepare('INSERT INTO `votes` (
     `ansCNT`
 ) VALUES (?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE `ansCNT` = `ansCNT` + VALUES(`ansCNT`)')) {
     $stmt->bind_param('iiiiiii', $uuid, $typeCD, $questionID, $wiiNo, $countryID, $regionID, $ansCNT);
-    DataDogStatsD::increment("votes.total_votes");
+    $statsd->increment("votes.total_votes");
     if ($stmt->execute())
         echo(100);
     else {
