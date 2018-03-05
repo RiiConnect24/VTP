@@ -42,8 +42,6 @@ if (!(
     die(500);
 }
 
-header("Connection: Keep-Alive"); // The Wii hates when it doesn't have its keep alive header
-
 require "config/config.php";
 require "lib/snowflake.php";
 require_once "vendor/autoload.php";
