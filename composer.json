@@ -1,6 +1,6 @@
 {
   "require": {
     "sentry/sentry": "^1.8",
-    "datadog/php-datadogstatsd": "1.0.*"
+    "datadog/php-datadogstatsd": "1.5.3"
   }
 }
